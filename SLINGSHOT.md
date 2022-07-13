@@ -4,7 +4,7 @@
 
 ### [H-01] Incorrectly encoded arguments to `executeTrades()` can allow tokens to be stolen
 
-This inding combines a couple weaknesses into one attack. The first weakness is a lack of validation on arguments to `executeTrades`, the second is that a pre-existing `fromToken` balance can be used in a trade:
+This finding combines a couple weaknesses into one attack. The first weakness is a lack of validation on arguments to `executeTrades`, the second is that a pre-existing `fromToken` balance can be used in a trade:
 
 1. Alice wants to convert 1000 DAI to WETH. She calls `executeTrades(DAI, WETH, 1000, [], 0, alice)`.
 2. Since trades is an empty array, and `finalAmountMin` is 0, the result is that 100 DAI are transferred to the Slingshot contract.

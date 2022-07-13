@@ -23,7 +23,7 @@ If a `finalAmountMin` is chosen that does not closely reflect the received amoun
 
 ### [M-02] Front-running/sandwich attacks
 
-If tokens are accidently sent to Slingshot, arbitrary trades can be executed and those funds can be stolen by anyone. This vulnerability impacts the `rescueTokens()` functionality and any funds trapped in Slingshot’s contract. Tokens and/or Eth have a higher likelihood of becoming trapped in Slingshot if `finalAmountMin` is not utilized properly.
+If tokens are accidently sent to Slingshot, arbitrary trades can be executed and those funds can be stolen by anyone. This vulnerability impacts the `rescueTokens()` functionality and any funds trapped in Slingshot’s contract. Tokens and/or ETH have a higher likelihood of becoming trapped in Slingshot if `finalAmountMin` is not utilized properly.
 
 **Recommendation:** Validating parameters in the `calldata` passed to modules and ensuring the `fromToken` and `amount` parameter from `executeTrades()` is equivalent to the token being swapped and amount passed to `swap()`. Additionally, approval values can be limited to value being traded and cleared after trades are executed.
 

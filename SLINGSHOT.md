@@ -32,7 +32,7 @@ If tokens are accidently sent to Slingshot, arbitrary trades can be executed and
 Current Slingshot contracts assume a rapid development environment so they use a proxy pattern with a trusted admin role. We do not expect any malicious behavior from admin,
 however, we agree that in the current setup the admin potentially would be able to use unlimited approvals to steal user’s funds. We consider this medium severity.
 
-## [M-04] Stuck tokens can be stolen
+### [M-04] Stuck tokens can be stolen
 
 Any tokens in the Slingshot contract can be stolen by creating a fake token and a Uniswap pair for the stuck token and this fake token. Consider 10 WETH being stuck in the Slingshot contract. One can create a fake ERC20 token contract FAKE and a WETH <> FAKE Uniswap pair. The attacker provides a tiny amount of initial WETH liquidity (for example, 1 gwei) and some amount of FAKE tokens. The attacker then executes `executeTrades()` action such that the Slingshot contract uses its Uniswap module to trade the 10 WETH into this pair.
 

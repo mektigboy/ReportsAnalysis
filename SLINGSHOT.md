@@ -15,12 +15,17 @@ This issue is essentially identical to the one described in Ethereum is a Dark F
 
 ## Medium Severity
 
-### [M-01] Front-Running/Sandwich Attacks
+### [M-01] Front-running/sandwich attacks
 
 If a `finalAmountMin` is chosen that does not closely reflect the received amount one would get at the market rate (even with just 1% slippage), this could lead to the trade being front-run and to less tokens than with a tighter slippage amount. Balancer and Curve modules don't have any slippage protection at all, which makes it easy for attackers to profit from such an attack. The min. amount returned is hardcoded to 1 for both protocols. The Sushiswap/Uniswap modules are vulnerable as well, depending on the `calldata` that is defined by the victim trader.
 
-### [M-02] Front Running/Sandwich Attacks
+### [M-02] Front-running/sandwich attacka
 
 If tokens are accidently sent to Slingshot, arbitrary trades can be executed and those funds can be stolen by anyone. This vulnerability impacts the `rescueTokens()` functionality and any funds trapped in Slingshot’s contract. Tokens and/or Eth have a higher likelihood of becoming trapped in Slingshot if `finalAmountMin` is not utilized properly.
 
 **Recommendation:** Validating parameters in the `calldata` passed to modules and ensuring the `fromToken` and `amount` parameter from `executeTrades()` is equivalent to the token being swapped and amount passed to `swap()`. Additionally, approval values can be limited to value being traded and cleared after trades are executed.
+
+### [M-03] Infinite approval abused by malicious admin
+
+Current Slingshot contracts assume a rapid development environment so they use a proxy pattern with a trusted admin role. We do not expect any malicious behavior from admin,
+however, we agree that in the current setup the admin potentially would be able to use unlimited approvals to steal user’s funds. We consider this medium severity.

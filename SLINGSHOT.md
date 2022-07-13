@@ -6,12 +6,12 @@
 
 This inding combines a couple weaknesses into one attack. The first weakness is a lack of validation on arguments to `executeTrades`, the second is that a pre-existing `fromToken` balance can be used in a trade:
 
-1. Alice wants to convert 1000 DAI to WETH. She calls executeTrades(DAI, WETH, 1000, [], 0, alice).
-2. Since trades is an empty array, and finalAmountMin is 0, the result is that 100 DAI are transferred to the Slingshot contract.
-3. Eve (a miner or other 'front runner') may observe this, and immediately call executeTrades(DAI, WETH, 0, [{TradeData}], 0, eve).
-4. With a correctly formatted array of TradeData, Eve will receive the proceeds of converting Alice's 1000 DAI to WETH.
+1. Alice wants to convert 1000 DAI to WETH. She calls `executeTrades(DAI, WETH, 1000, [], 0, alice)`.
+2. Since trades is an empty array, and `finalAmountMin` is 0, the result is that 100 DAI are transferred to the Slingshot contract.
+3. Eve (a miner or other "front runner") may observe this, and immediately call `executeTrades(DAI, WETH, 0, [{TradeData}], 0, eve)`.
+4. With a correctly formatted array of `tradeData`, Eve will receive the proceeds of converting Alice's 1000 DAI to WETH.
 
-This issue is essentially identical to the one described in Ethereum is a Dark Forest, where locked tokens are available to anyone, and thus recovery is susceptible to front running. It also provides an unauthorized alternative to rescueTokens(), however it is still a useful function to have, as it provides a method to recover the tokens without allowing a front runner to simulate and replay it.
+This issue is essentially identical to the one described in Ethereum is a Dark Forest, where locked tokens are available to anyone, and thus recovery is susceptible to front running. It also provides an unauthorized alternative to `rescueTokens()`, however it is still a useful function to have, as it provides a method to recover the tokens without allowing a front runner to simulate and replay it.
 
 ## Medium Severity
 

@@ -23,4 +23,14 @@ An attacker can change the expected DAO address to their own address in the `mod
 
 ### [H-04] Conﬁgurator contract allows inﬁnite minting of tokens
 
-Even if a configurator address is hard-coded in the `Ecosystem.sol` contract, attackers can call the `buildToken` function on the `services/Configurator.sol` contract and change nearly all of the parameters to be attacker-controlled. The attacker bypasses the authorization check and gains write access to fields of the DAO ecosystem.
+Even if a conﬁgurator address is hard-coded in the `Ecosystem.sol` contract, attackers can call the `buildToken` function on the `services/Configurator.sol` contract and change nearly all of the parameters to be attacker-controlled. The attacker bypasses the authorization check and gains write access to ﬁelds of the DAO ecosystem.
+
+### [H-05] New users can be blocked from joining
+
+The `join` function requires users to send an exact amount of ETH for the required shares. Attackers can survey the mempool for `join` transactions and send a tiny amount of wei to the DAO contract to change the required ETH value to a different value than the user submitted. This grieﬁng attack would prevent new users from joining the DAO.
+
+Malicious actors might use this attack to prevent new votes from derailing the outcome of a proposal. Normal DAO usage might also block new users from joining. Token curve parameters change as a result of new join transactions. During times of high demand, many transactions will fail and effectively result in a self-DOS.
+
+### [H-06] Incorrect event parameters in `transferFrom` function
+
+The `emitApproval` event should occur when the `msg.sender` is not equal to `_from`. The event should be `emitApproval(from, msg.sender, _allowances[_from][msg.sender])`; instead of `emit Approval(msg.sender, _to, _allowances[_from [msg.sender]`). This error may negatively impact off-chain tools that are monitoring critical transfer events of the governance token.

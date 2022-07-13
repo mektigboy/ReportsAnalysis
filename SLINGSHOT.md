@@ -38,7 +38,7 @@ Any tokens in the Slingshot contract can be stolen by creating a fake token and 
 
 ### [M-05] Admin role lockout
 
-The `initializeAdmin(`) function in Adminable.sol sets/updates admin role address in one-step. If an incorrect address (zero address or other) is mistakenly used then future
+The `initializeAdmin(`) function in `Adminable.sol` sets/updates admin role address in one-step. If an incorrect address (zero address or other) is mistakenly used then future
 administrative access or even recovering from this mistake is prevented because all `onlyAdmin` modifier functions (including `postUpgrade()` with `onlyAdminIfInitialized`, which ends up calling `initializeAdmin()`) require `msg.sender` to be the incorrectly used admin address (for which private keys may not be available to sign transactions). In such a case, contracts would have to be redeployed.
 
 **Recommendation:** Using a two-step process where the new admin address first claims ownership in one transaction and a second transaction from the new admin address takes ownership.

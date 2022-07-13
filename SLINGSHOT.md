@@ -1,5 +1,7 @@
 # SLINGSHOT
 
+Only high/medium severity findings.
+
 ## High Severity
 
 ### [H-01] Incorrectly encoded arguments to `executeTrades()` can allow tokens to be stolen

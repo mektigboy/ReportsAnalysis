@@ -1,6 +1,6 @@
 # SLINGSHOT
 
-Only high/medium severity findings.
+Only high and medium severity findings.
 
 ## High Severity
 

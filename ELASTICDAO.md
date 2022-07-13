@@ -16,3 +16,11 @@ A similar exploit is possible because of the `models/Ecosystem.sol` eternal stor
 
 Gaining full access to the DAO ecosystem data is also possible by changing the `daoModelAddress` ﬁeld to an attacker-controlled proxy contract. This attack vector allows
 attackers to mint inﬁnite tokens for themselves and potentially break all DAOs created by the ElasticDAO system.
+
+### [H-03] Inﬁnite minting of tokens by exploiting eternal storage pattern on Token.sol
+
+An attacker can change the expected DAO address to their own address in the `models/Token.sol` contract. The attacker can change the token parameters so that they receive much more ETH for their shares when exiting from the DAO. Attackers could also steal all funds from the DAO, effectively breaking ElasticDAO’s model.
+
+### [H-04] Conﬁgurator contract allows inﬁnite minting of tokens
+
+Even if a configurator address is hard-coded in the `Ecosystem.sol` contract, attackers can call the `buildToken` function on the `services/Configurator.sol` contract and change nearly all of the parameters to be attacker-controlled. The attacker bypasses the authorization check and gains write access to fields of the DAO ecosystem.

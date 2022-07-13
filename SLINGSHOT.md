@@ -2,7 +2,7 @@
 
 ## High Severity
 
-### Incorrectly encoded arguments to `executeTrades()` can allow tokens to be stolen
+### [H-01] Incorrectly encoded arguments to `executeTrades()` can allow tokens to be stolen
 
 This inding combines a couple weaknesses into one attack. The first weakness is a lack of validation on arguments to `executeTrades`, the second is that a pre-existing `fromToken` balance can be used in a trade:
 
@@ -15,6 +15,6 @@ This issue is essentially identical to the one described in Ethereum is a Dark F
 
 ## Medium Severity
 
-### Front Running/Sandwich Attacks
+### [M-01] Front Running/Sandwich Attacks
 
 If a `finalAmountMin` is chosen that does not closely reflect the received amount one would get at the market rate (even with just 1% slippage), this could lead to the trade being frontrun and to less tokens than with a tighter slippage amount. Balancer and Curve modules don't have any slippage protection at all, which makes it easy for attackers to profit from such an attack. The min. amount returned is hardcoded to 1 for both protocols. The Sushiswap/Uniswap modules are vulnerable as well, depending on the calldata that is defined by the victim trader.

@@ -63,3 +63,13 @@ The `setController` function in `ElasticDAO.sol` updates the controller address 
 ### [M-05] Malicious actors can avoid penalty
 
 A DAO member may be able to predict when they will be penalized if they monitor the mempool for events related to the `penalize` function on the contract. This member can then avoid penalization by transferring their balance to another address and sending it back to the original account after the next block. Since the penalty transaction will revert if the amount is greater than the balance, an attacker could potentially front-run the penalty by calling the `exit` function with a miniscule amount of ETH. They could also exit the DAO completely. This loophole provides potential incentive for malicious actors to exploit the DAO.
+
+### [M-06] Double-spend allowance
+
+A malicious attacker can execute a double-spend attack on an allowance by front-running the execution of an `approve` function that alters the state of a balance. Since the `increaseAllowance` and `decreaseAllowance` functions provide the same functionality, the `approve` function is an unnecessary attack vector that can present signiﬁcant risk.
+
+**ElasticDAO:** “This issue is present in most ERC20 tokens and very few choose to take the recommended mitigation step. We've chosen to go with expected behaviour instead of removing a function that is part of the spec.”
+
+### [M-07] Passing a zero address for controller will require redeployment of the contract
+
+Passing a zero address for the controller during initialization will require redeployment of the contract because the `onlyController` modiﬁer for critical contract functions cannot be changed after initial deployment.

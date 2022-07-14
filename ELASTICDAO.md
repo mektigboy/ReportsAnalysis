@@ -59,3 +59,7 @@ The `initialize` function does not check if the summoners are all non-zero addre
 The `setController` function in `ElasticDAO.sol` updates the controller address in one set-up. If the controller address is set incorrectly, administrative access is prevented because `setController` includes an `onlyController` modiﬁer. The contract would have to be redeployed if this mistake is made.
 
 **ElasticDAO:** “The vulnerability is correct, however, the impact is incorrect. Because we deploy with proxies, in a worst case scenario, the proxy implementation could be upgraded to ﬁx this issue.”
+
+### [M-05] Malicious actors can avoid penalty
+
+A DAO member may be able to predict when they will be penalized if they monitor the mempool for events related to the `penalize` function on the contract. This member can then avoid penalization by transferring their balance to another address and sending it back to the original account after the next block. Since the penalty transaction will revert if the amount is greater than the balance, an attacker could potentially front-run the penalty by calling the `exit` function with a miniscule amount of ETH. They could also exit the DAO completely. This loophole provides potential incentive for malicious actors to exploit the DAO.

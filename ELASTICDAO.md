@@ -33,11 +33,11 @@ Malicious actors might use this attack to prevent new votes from derailing the o
 
 ### [H-06] Incorrect event parameters in `transferFrom` function
 
-The `Approval` event should occur when the `msg.sender` is not equal to `_from`. The event should be `emit Approval(from, msg.sender, _allowances[_from][msg.sender])`; instead of `emit Approval(msg.sender, _to, _allowances[_from [msg.sender]`). This error may negatively impact off-chain tools that are monitoring critical transfer events of the governance token.
+The `emitApproval` event should occur when the `msg.sender` is not equal to `_from`. The event should be `emitApproval(from, msg.sender, _allowances[_from][msg.sender])`; instead of `emit Approval(msg.sender, _to, _allowances[_from [msg.sender]`). This error may negatively impact off-chain tools that are monitoring critical transfer events of the governance token.
 
 ### [H-07] Minter can call functions reserved for DAO addresses
 
-In `ElasticGovernanceToken.sol`, the onlyDAO modiﬁer is meant to only allow a DAO address to call functions like `setBurner` and `setMinter`. However, as currently written, this modiﬁer allows the `msg.sender` to either be a DAO address or the minter address.
+In `ElasticGovernanceToken.sol`, the `onlyDAO` modiﬁer is meant to only allow a DAO address to call functions like `setBurner` and `setMinter`. However, as currently written, this modiﬁer allows the `msg.sender` to either be a DAO address or the minter address.
 
 ## Medium Severity
 

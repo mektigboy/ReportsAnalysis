@@ -38,3 +38,18 @@ The `emitApproval` event should occur when the `msg.sender` is not equal to `_fr
 ### [H-07] Minter can call functions reserved for DAO addresses
 
 In `ElasticGovernanceToken.sol`, the onlyDAO modiﬁer is meant to only allow a DAO address to call functions like `setBurner` and `setMinter`. However, as currently written, this modiﬁer allows the `msg.sender` to either be a DAO address or the minter address.
+
+## Medium Severity
+
+### [M-01] No check to prevent fee burning
+
+The `collectFees` function sends fees to a `feeAddress` in storage, however, there is currently no check to validate whether or not `feeAddress` has been initialized. An attacker can call `collectFees` to send the fees to the zero address, making recovery impossible. This attack could be used against new DAOs to burn their main revenue besides the token market.
+
+### [M-02] Anyone can update the number of token holders
+
+The `updateNumberOfTokenHolders` function in the `ElasticGovernanceToken.sol` does not verify the caller. Anyone could call this function and set the value to 0. While this does not put funds at risk, an attacker could set the value of `numberOfTokenHolders` to `MAX_UINT`,
+resulting in an overﬂow and a reverted transaction the next time `updateNumberOfTokenHolders()` is called to to increment this number.
+
+### [M-03] The `initialize` function does not check for non-zero values
+
+The `initialize` function does not check if the summoners are all non-zero addresses. If all he initialized summoners happen to be 0, the contract will have to be redeployed.

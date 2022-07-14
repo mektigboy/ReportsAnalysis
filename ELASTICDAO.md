@@ -53,3 +53,9 @@ resulting in an overﬂow and a reverted transaction the next time `updateNumber
 ### [M-03] The `initialize` function does not check for non-zero values
 
 The `initialize` function does not check if the summoners are all non-zero addresses. If all he initialized summoners happen to be 0, the contract will have to be redeployed.
+
+### [M-04] Potential for lock out of administrative access
+
+The `setController` function in `ElasticDAO.sol` updates the controller address in one set-up. If the controller address is set incorrectly, administrative access is prevented because `setController` includes an `onlyController` modiﬁer. The contract would have to be redeployed if this mistake is made.
+
+**ElasticDAO:** “The vulnerability is correct, however, the impact is incorrect. Because we deploy with proxies, in a worst case scenario, the proxy implementation could be upgraded to ﬁx this issue.”
